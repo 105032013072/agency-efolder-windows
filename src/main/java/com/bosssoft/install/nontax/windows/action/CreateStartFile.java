@@ -76,7 +76,7 @@ import javax.swing.filechooser.FileSystemView;
         	
         	//若mysql为内置安装，配置为启动项
         	if("true".equals(context.getStringValue("DB_IS_INSTALL"))){
-        		out.write("net start Mysql"+System.lineSeparator());
+        		out.write("net start efolderMySQL"+System.lineSeparator());
         	}
         	
         

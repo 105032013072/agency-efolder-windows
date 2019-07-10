@@ -90,7 +90,7 @@ public class CreateUninstallFile implements IAction{
         		//bossHomeDir(moduleDef,strbuffer,context);
 			}
 			for (File item : fileList) {
-        		if(item.getName().equals("mysql")){
+        		if(item.getName().equals("efolderMySQL")){
         			continue;
 				}
 				if(item.isDirectory()) {

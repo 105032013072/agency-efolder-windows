@@ -21,7 +21,7 @@ public class MysqlBuiltInEditorPanel extends AbstractDBEditorPanel{
 	Logger logger = Logger.getLogger(getClass());
 	
 	public MysqlBuiltInEditorPanel() {
-		this.tfdPort.setText("3306");
+		this.tfdPort.setText("3305");
 		
 		
 		/*this.tfdSID.setText("bosssoftdb");

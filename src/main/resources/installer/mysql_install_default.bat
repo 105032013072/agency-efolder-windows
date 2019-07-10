@@ -17,12 +17,12 @@ set path=%SystemRoot%/system32;%SystemRoot%;%SystemRoot%;%path%
 cd %mysql_path%\
 echo.>my.ini
 echo  [client] >> my.ini
-echo  port=3305 >> my.ini
+echo  port=3306 >> my.ini
 echo  default-character-set=utf8 >> my.ini
 echo  [mysql] >> my.ini
 echo  default-character-set=utf8 >> my.ini
 echo  [mysqld] >> my.ini
-echo  port=3305 >> my.ini
+echo  port=3306 >> my.ini
 echo  character_set_server=utf8 >> my.ini
 echo  basedir=%mysql_path% >> my.ini
 echo  datadir=%mysql_path%\data >> my.ini
@@ -36,11 +36,11 @@ echo  %mysql_path%\bin\mysqld.exe >> my.ini
 :: ------------install Mysql as server------------
 %dir%:
 cd %mysql_path%\bin
-mysqld install efolderMySQL --defaults-file=%mysql_path%\my.ini
+mysqld install MySQL --defaults-file=%mysql_path%\my.ini
 
 
 :: ------------modify MySQL-root password------------------------------
-net start efolderMySQL
+net start mysql
  rem cd %mysql_path%\bin
 rem mysql -e "use mysql"
 rem mysql -e "update mysql.user set authentication_string=password('root') where user='root' ;"

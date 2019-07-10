@@ -41,7 +41,7 @@ public class CreateStopFile implements IAction{
         	}
         	//数据库停止
         	if("true".equalsIgnoreCase(context.getStringValue("DB_IS_INSTALL"))){
-        		out.write("net stop mysql"+System.lineSeparator());
+        		out.write("net stop efolderMySQL"+System.lineSeparator());
         	}
         	
         	out.write("echo stop success"+System.lineSeparator());
