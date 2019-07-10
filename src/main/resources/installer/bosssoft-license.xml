@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<licenses>
+  <license-group productFamily="财政非税票据一体化系统" release="1.0" edition="PE" licensee="测试">
+    <license product="efolder-web" isTrial="false" sign="233a20fb9df92298418f4dd0890c8381b25edad19867455c7b899b5e011b97f4234d7c207fe0cf18f3bcc2e4bcebf82d3fb158f46b2ecd673f7d8e44b067a47469a121f9a9c15842553cd11454bd6f665132ae4c83f82aeec1d99ce71d47ebe20ddeeb59e98a8bfeb090cab700632194be5e0989a42cfa67b75d6cecafcf8d7f">
+      <license-element key="ip" value="IY8szP8s+RCMyYyXEJNkqO7+voAcrOTHdQ==" customize="false"/>
+      <license-element key="mac" value="sLxWp7ixGB6k/Xqu7mWDarLR90Jy6wsDbg==" customize="false"/>
+      <license-element key="cpus" value="unlimited" customize="false"/>
+      <license-element key="os" value="unlimited" customize="false"/>
+      <license-element key="expiration" value="unlimited" customize="false"/>
+      <license-element key="region" value="unlimited" customize="false"/>
+      <license-element key="db" value="unlimited" customize="false"/>
+      <license-element key="workflow" value="true" customize="false"/>
+      <license-element key="as" value="unlimited" customize="false"/>
+    </license>
+  </license-group>
+</licenses>

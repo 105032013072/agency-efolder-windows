@@ -1,0 +1,32 @@
+#################单位端应用id（不可修改）############################
+##application.id=02
+##application.name=NONTAX-AGENCY-FRONT
+###################################### Ehcache 缓存设置 ##############################
+###Ehcache默认不开启（开启：true， 关闭：false）
+##ehcache.enable=false
+##
+###spring加载配置（不可修改）
+##spring.applicationcontextaware.class=com.bosssoft.frame.spring.AppContextAware
+##
+###################################### 界面 Settings ##################################
+###页面缓存（开启：true， 关闭：false）
+##ui.pagecache.enable=true
+###xml缓存（开启：true， 关闭：false）
+##ui.xmltemplate.freemarker.enable=true
+##
+###序列化（默认不开启，开启：true， 关闭：false）
+##spring.jackson.serializer.string.null2empty=false
+####### License settings #####
+###license授权应用id(到应用中心设置)
+##license.product.id=agency
+###新网格兼容就网格 （兼容：false， 不兼容：true）
+##ui.xmltemplate.freemarker.enable=false
+
+jdbc.driver=$DB_DRIVER
+jdbc.url=$DB_URL
+jdbc.username=$DB_USERNAME
+jdbc.password=$DB_PASSWORD
+jdbc.publickey=MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBALM9wtHwgWubVbxuBiFNWZa39As4dR/TbYYRvfKOTRvwiqmMkNqagwFN/NujwHdAxHjXT9x6r69qIwCjUy2itRcCAwEAAQ==
+jobs.schedule.cron = 0 0 3 * * ?
+enableEncrypt = false
+enableSchedule = true

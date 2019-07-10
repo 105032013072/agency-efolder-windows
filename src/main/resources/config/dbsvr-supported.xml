@@ -1,0 +1,8 @@
+<servers>
+	<!--<server name="MySql_BuildIn"  type="MySql" version="5.6" desc="内置数据库（mysql）" editorPanel="com.bosssoft.install.nontax.windows.gui.MysqlBuiltInEditorPanel" jars="mysql-connector-java-3.1.14-bin.jar"/>-->
+	<server name="MySql_BuildIn"  type="mysql" version="5" desc="内置数据库（mysql）" editorPanel="com.bosssoft.install.nontax.windows.gui.MysqlBuiltInEditorPanel" jars="mysql-connector-java-3.1.14-bin.jar"/>
+	<!--<server name="Oracle" type="oracle" version="9i/10g/11g" editorPanel="com.bosssoft.install.nontax.windows.gui.FrontOracleEditorPanel" jars="ojdbc14-11.2.0.1.0.jar"/>-->
+	 <!--<server name="Sybase" version="12.5/15.0" editorPanel="com.bosssoft.platform.installer.wizard.gui.db.SybaseEditorPanel" jars="sybase_jconn.jar"/> -->
+	<!-- <server name="Informix" version="9.4" editorPanel="com.bosssoft.platform.installer.wizard.gui.db.InformixEditorPanel" jars="infomixjdbc.jar"/> -->
+	<server name="MySql" type="mysql" version="5" editorPanel="com.bosssoft.install.nontax.windows.gui.FrontMysqlEditorPanel" jars="mysql-connector-java-3.1.14-bin.jar"/>
+</servers>

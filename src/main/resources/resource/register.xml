@@ -1,0 +1,12 @@
+<!--需要被注册为Windows服务的应用 ，按照启动顺序排列-->
+<servers>
+
+	<server>
+		<name>tomcat</name>
+		<wordDir>${AS_TOMCAT_HOME}/bin</wordDir>
+		<register>service.bat install billTomcat</register>
+		<start>net start billTomcat</start>
+		<stop>net stop billTomcat</stop>
+		<remove>sc delete billTomcat</remove>
+	</server>
+</servers>

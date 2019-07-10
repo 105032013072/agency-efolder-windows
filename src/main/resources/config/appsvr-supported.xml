@@ -1,0 +1,3 @@
+<servers>
+	<server name="Tomcat" version="" editorPanel="com.bosssoft.platform.installer.wizard.gui.as.TomcatEditorDEPanel"/>
+</servers>

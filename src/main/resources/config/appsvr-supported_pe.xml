@@ -1,0 +1,4 @@
+<servers>
+	<server name="Tomcat_BuildIn" type="Tomcat" desc="内置应用服务器（tomcat）" version="8" clusterDeploy="false" editorPanel="com.bosssoft.install.nontax.windows.gui.TomcatBuiltInEditorPanel"/>
+	<server name="Tomcat" type="Tomcat" version="8" clusterDeploy="false" editorPanel="com.bosssoft.install.nontax.windows.gui.TomcatEditorPanel"/>
+</servers>

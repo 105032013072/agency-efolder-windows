@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<module id="agency" descKey="MODULE.AGENCY" filesPath="${INSTALL_ROOT}/option_comps/agency/efolder-web.war"
+			editable="false" selected="true" size="171"
+			nameKey="efolder-web" chineseName="票夹服务">
+	</module>
+		

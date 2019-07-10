@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+	<variable name="PRODUCT_NAME" value="nontax" />
+	<variable name="VERSION_NUMBER" value="1.0" />
+	<variable name="EDITION" value="PE" />
+	<variable name="RUNNER_TYPE" value="install" />
+	<!-- 安装此产品需要的空间，以MB为单位 -->
+	<variable name="DISK_NEEDED" value="1024" />
+	<loadproperties srcfile="productinfo.properties" />
+	<renderer classname="com.bosssoft.platform.installer.wizard.gui.StepListRenderer" />
+	<!--<renderer classname="com.bosssoft.install.nontax.windows.gui.NontaxStepListRenderer" />-->
+
+	<steps firststep="01">
+		<step id="01" desc="Install Initialize">
+			<echo message="start install nontax PE............" />
+			<if>
+				<equals arg1="${IS_SILENT_INSTALL}" arg2="true" />
+				<then>
+					<!--licnese 验证-->
+			       <action name="check license" classname="com.bosssoft.install.nontax.windows.action.LicenseCheck"/>
+					<action name="silent installing init"
+						classname="com.bosssoft.platform.installer.wizard.action.SilentInit" />
+					<!--环境检查-->
+			      <echo message="check enviromment"/>
+		          <action name="check enviromment" classname="com.bosssoft.install.nontax.windows.action.CheckEnviromment"/>
+				</then>
+			</if>
+			<action name="init install"
+				classname="com.bosssoft.platform.installer.wizard.action.InstallerInitialize"
+				desc="Installer Initialize..." />
+			<echo message="INSTALL_ROOT ............${INSTALL_ROOT}" />
+			<action name="get temp dir" classname="com.bosssoft.platform.installer.wizard.action.GetTempDir"
+				desc="get temprary dir">
+				<parameter name="variable_key" value="TEMP_DIR" />
+			</action>
+			<nextstep default="011" />
+		</step>
+		<step id="011" desc="Temp Space Check">
+			<action name="check temp space" classname="com.bosssoft.platform.installer.wizard.action.CheckDiskSpace"
+				desc="Disk space is enough">
+				<parameter name="DIR" value="${TEMP_DIR}" />
+				<parameter name="SPACESIZE" value="200" />
+				<parameter name="VARIABLE_INDEX" value="TEMPSPACE_ENOUGH" />
+			</action>
+			<nextstep discriminator="${TEMPSPACE_ENOUGH}">
+				<branch id="true" stepid="02" />
+				<branch id="false" stepid="012" />
+			</nextstep>
+		</step>
+		<step id="012" desc="TempSpaceChoose">
+			<gui setuppanel="com.bosssoft.platform.installer.wizard.gui.TempSpaceChoosePanel"
+				controlpanel="com.bosssoft.platform.installer.wizard.gui.ConfirmCancelControlPanel"
+				render="false" />
+			<nextstep default="011" />
+		</step>
+		<step id="02" desc="Introduction">
+			<gui setuppanel="com.bosssoft.install.nontax.windows.gui.IntroductionLicensepanel"/>
+			
+			<nextstep default="03" />
+		</step>
+		
+		<step id="03" desc="LicenseAgreement">
+			<gui setuppanel="com.bosssoft.platform.installer.wizard.gui.LicenseViewPanel" />
+			<nextstep default="04" />
+		</step>
+		
+		<step id="04" desc="IntallDir">
+			<gui setuppanel="com.bosssoft.platform.installer.wizard.gui.ChooseInstallDirPanel"/>
+			<setvalue key="INSTALL_DIR" value="${INSTALL_DIR}" />
+			<nextstep default="05" />
+		</step>
+	
+		
+		<step id="05" desc="SetRunEvn">
+			<gui setuppanel="com.bosssoft.install.nontax.windows.gui.FrontConfigRunEvnPanelSenior"/>
+			
+			<action name="init components" classname="com.bosssoft.install.nontax.windows.action.InitComponents"
+				desc="init components">
+			</action>
+			<nextstep default="06" />
+		</step>
+		
+		
+		<step id="06" desc="ApplicationServer">
+			<!--<gui setuppanel="com.bosssoft.platform.installer.wizard.gui.AppSvrPanel"/>-->
+			<gui setuppanel="com.bosssoft.install.nontax.windows.gui.NontaxAppSvrPanel"/>
+			<nextstep default="07" />
+		</step>
+		
+		
+		
+		<step id="07" desc="ConfigDatasource">
+            	<gui setuppanel="com.bosssoft.install.nontax.windows.gui.FrontConfigDBPanel" />
+			<!--<gui setuppanel="com.bosssoft.platform.installer.wizard.gui.ConfigDBPanel" />-->
+			<nextstep default="08" />
+		</step>
+		
+		
+		<!--<step id="10" desc="ConfigProduct">
+			<gui setuppanel="com.bosssoft.install.nontax.windows.gui.ConfigProduct"/>
+			<nextstep default="11" />
+		</step>-->
+		
+		<step id="08" desc="DigestInfo">
+			<gui setuppanel="com.bosssoft.install.nontax.windows.gui.FrontDigestPanel"/>
+			<nextstep default="09" />
+		</step>
+		<step id="09" desc="Installing" auto="true">
+			<gui setuppanel="com.bosssoft.platform.installer.wizard.gui.InstallingPanel"/>
+			<actionscall id="install" />
+			<nextstep default="10" />
+		</step>
+		<step id="10" desc="Finished">
+			<gui setuppanel="com.bosssoft.install.nontax.windows.gui.NontaxInstallFinishedPanel"/>
+			<nextstep default="13"/>
+		</step>
+		
+		<!--<step id="11" desc="ConfigBusiness">-->
+            	<!--<gui setuppanel="com.bosssoft.install.nontax.windows.gui.ConfigBusinessPanel" />-->
+			<!--<nextstep default="12" />-->
+		<!--</step>-->
+		<!---->
+		<!--<step id="12" desc="initBusiness">-->
+            	 <!--<action name="init Business" classname="com.bosssoft.install.nontax.windows.action.InitBusiness"-->
+			            <!--desc="init Business" >-->
+		          <!--<parameter name="configFile" value="${INSTALL_ROOT}/installer/agency-front-init/config/application-init.properties"/>-->
+		           	<!--<parameter name="configKey" value="com.bosssoft.platform.jdbc.dbtype,com.bosssoft.platform.jdbc.driver,com.bosssoft.platform.jdbc.url,com.bosssoft.platform.jdbc.username,com.bosssoft.platform.jdbc.password,com.bosssoft.workflow.act_databaseSchema,front.init.agency_code,front.init.agency_name,front.init.region_code,front.init.sync_app_id,front.init.sync_app_key,front.init.remote_url"/>&lt;!&ndash;configFile中需要修改的配置项&ndash;&gt;-->
+		           	<!--<parameter name="contextKey" value="DB_TYPE,DB_DRIVER,DB_URL,DB_USERNAME,DB_PASSWORD,DB_SCHEMA,BUSINESS_AGENCYCODE,BUSINESS_AGENCYNAME,BUSINESS_REGIONCODE,BUSINESS_APPID,BUSINESS_KEY,BUSINESS_INTERFACE"/>&lt;!&ndash;上下文中与configKey中相对应的key，顺序要对应&ndash;&gt;-->
+		            <!--<parameter name="runFile" value="${INSTALL_ROOT}/installer/agency-front-init/bin/start.bat"/>-->
+		           <!--</action>-->
+			<!--<nextstep default="13" />-->
+		<!--</step>-->
+		
+		<step id="13" desc="run" auto="true">
+			<gui setuppanel="com.bosssoft.install.nontax.windows.gui.StartApppanel"/>
+			<actionscall id="start exe" />
+			<nextstep default="14"/>
+		</step>
+		
+		
+		
+		<step id="14" desc="runFinish">
+			<gui setuppanel="com.bosssoft.install.nontax.windows.gui.NontaxRunFinishedPanel"/>
+		</step>
+	</steps>
+
+   <actions id="start exe">
+   	 <action name="run bat" classname="com.bosssoft.install.nontax.windows.action.RunBatFile">
+   </action>
+	 
+	
+   </actions>
+
+	<actions id="install">
+		<echo message="BOSSSOFT_HOME:${BOSSSOFT_HOME}"/>
+		<!--创建安装目录-->
+		<echo message="make install dir"/>
+		<mkdir dir="${INSTALL_DIR}" />
+			
+		<!--获取Ip-->
+		<echo message="get ip"/>
+		<action name="getip" classname="com.bosssoft.install.nontax.windows.action.GetIp">
+		</action>	
+			
+	    <!--安装Tomcat-->
+	    <if>
+			<equals arg1="${IS_APP_SERVER_INSTALL}" arg2="true" />
+			<then>
+				<!--Tomcat解压，设置路径-->
+				<echo message="install Tomcat" />
+		         <unzip src="${INSTALL_ROOT}/resource/as/apache-tomcat-8.5.35.zip" dest="${INSTALL_DIR}/as" scale="10" />
+		         <setvalue key="AS_TOMCAT_HOME" value="${INSTALL_DIR}/as/apache-tomcat-8.5.35" />
+				<echo message="${AS_TOMCAT_HOME}" />
+		         <setvalue key="APP_SERVER_DEPLOY_DIR" value="${INSTALL_DIR}/as/apache-tomcat-8.5.35/webapps" />
+			</then>
+		</if>
+		
+	
+		<!--运行环境服务安装-->
+		<echo message="create run environment"/>
+		<action name="create run environment" classname="com.bosssoft.platform.installer.wizard.action.CreateRunEvn" scale="25">
+		</action>
+		
+		<!--&lt;!&ndash;安装jdk&ndash;&gt;-->
+		<!--<echo-->
+		        <!--message="install jdk: unzip ${INSTALL_ROOT}/resource/jdk/1.8/jdk.zip to ${INSTALL_DIR}/java_1.8"/>-->
+		<!--<unzip src="${INSTALL_ROOT}/resource/jdk/1.8/jdk.zip"-->
+			<!--dest="${INSTALL_DIR}/java_1.8" scale="10" />-->
+		   <!--<setvalue key="JAVA_HOME" value="${INSTALL_DIR}/java_1.8/jdk1.8.0_161" />-->
+		   <!--<setvalue key="classpath" value=".;%JAVA_HOME%/lib/dt.jar;%JAVA_HOME%/lib/tools.jar" />-->
+		   <!--<setvalue key="path" value="${INSTALL_DIR}/java_1.8/jdk1.8.0_161/bin" />-->
+		
+		<!--安装redis-->
+		<!--<echo
+			message="install redis: unzip ${INSTALL_ROOT}/resource/redis/redis.zip to ${INSTALL_DIR}" />
+		<unzip src="${INSTALL_ROOT}/resource/redis/redis.zip" dest="${INSTALL_DIR}" scale="10" />
+		<setvalue key="redis_path" value="${INSTALL_DIR}/redis/redis-server.exe" />-->
+		<!--安装zookeeper-->
+		<!--<echo
+			message="install zookeeper: unzip ${INSTALL_ROOT}/resource/zookeeper/zookeeper-3.4.6.zip to ${INSTALL_DIR}" />
+		<unzip
+			  src="${INSTALL_ROOT}/resource/zookeeper/zookeeper-3.4.6.zip"
+			   dest="${INSTALL_DIR}" scale="10" />
+			   <setvalue key="zookeeper_path" value="${INSTALL_DIR}/zookeeper-3.4.6/bin/zkServer.cmd" />-->
+		<!--拷贝相关资源到安装目录-->
+		<echo
+			message="copy resource to ${INSTALL_DIR}" />
+		<!--<copyfile src="${INSTALL_ROOT}/front-app-info.txt" dest="${INSTALL_DIR}/front-app-info.txt" />-->
+		<copydir src="${INSTALL_ROOT}/image" dest="${INSTALL_DIR}/image"></copydir>
+		
+		<!--安装相关组件-->
+		<echo  message="deploy option components" />
+		<action name="deploy option components" classname="com.bosssoft.platform.installer.wizard.action.DeployOptionComps"
+			desc="Deploy option components" scale="25">
+		</action>
+		
+<!--		&lt;!&ndash;BOSSSOFT_SERVER_HOME创建&ndash;&gt;
+		<echo message="create BOSSSOFT_SERVER_HOME" />
+		<action name="create BOSSSOFT_SERVER_HOME" classname="com.bosssoft.platform.installer.wizard.action.CreateBossHome"
+			desc="init DataSource" scale="10">
+			<parameter name="initParams" value="IP,APP_SERVER_PORT,DB_URL,DB_USERNAME,DB_PASSWORD,DB_TYPE,DB_DRIVER,DB_SCHEMA" />
+		</action>
+		-->
+		
+		<!--配置nginx的转发路径-->
+		<!--<echo message="config nginx" />
+		<action name="config nginx" classname="com.bosssoft.install.nontax.windows.action.ConfigComponents"
+			desc="Deploy option components" scale="5">
+			<parameter name="CONFIG_TEMPLATE_PATH" value="${INSTALL_ROOT}/installer/nginx_template.txt" />
+		</action>-->
+		
+		<!--安装数据库-->
+		<if>
+			<equals arg1="${DB_IS_INSTALL}" arg2="true" />
+			<then>
+				<echo message="install DB" />
+				<unzip src="${INSTALL_ROOT}/resource/db/mysql-5.5.62.zip" dest="${INSTALL_DIR}/mysql" scale="10" />
+				<action name="install DB" classname="com.bosssoft.install.nontax.windows.action.InstallMysql"
+			            desc="install DB" scale="5">
+					<parameter name="MYSQL_ZIP_PATH" value="${INSTALL_DIR}/mysql/mysql-5.5.62" /><!--mysql解压路径-->
+		        </action>
+			</then>
+		</if>
+		
+		<if>
+			<equals arg1="${DB_IS_INIT}" arg2="true" />
+			<then>
+				<!--数据库初始化-->
+				<echo
+			       message="init DB" />
+			       <!--调用外部执行脚本初始化-->
+				   <setvalue key="DB_INIT_SQLSCRIPT" value="${INSTALL_ROOT}/db/efolder.sql"/>
+		           <action name="init DB" classname="com.bosssoft.platform.installer.wizard.action.InitDBSqlScript"
+			            desc="init DB" scale="5">
+		           </action>
+			</then>
+		</if>
+		<!--配置应用服务器-->
+		<echo message="config jvm appSvr" />
+		<action name="config jvm appSvr" classname="com.bosssoft.install.nontax.windows.action.FrontConfigJvmAppsvr"
+			desc="init DataSource" scale="5">
+		</action>
+
+		<!--设置应用服务器路径-->
+		<action name="set appserver path" classname="com.bosssoft.install.nontax.windows.action.SetAppsvrPath">
+		</action>
+		<!--tomcat 和zookeeper的启动需要Java环境-->
+		<if>
+			<equals arg1="${IS_APP_SERVER_INSTALL}" arg2="true" />
+			<then>
+				<setvalue key="CATALINA_HOME" value="${AS_TOMCAT_HOME}" />
+				<action name="set java for server" classname="com.bosssoft.platform.installer.wizard.action.configServerEvn">
+		           <parameter name="configFiles" value="${AS_TOMCAT_HOME}/bin/startup.bat,${AS_TOMCAT_HOME}/bin/service.bat,${AS_TOMCAT_HOME}/bin/shutdown.bat" />
+		           <parameter name="environments" value="JAVA_HOME,classpath,path"></parameter>
+		        </action>
+
+		        <action name="set java for server" classname="com.bosssoft.platform.installer.wizard.action.configServerEvn">
+		           <parameter name="configFiles" value="${AS_TOMCAT_HOME}/bin/startup.bat,${AS_TOMCAT_HOME}/bin/service.bat,${AS_TOMCAT_HOME}/bin/shutdown.bat" />
+		           <parameter name="environments" value="CATALINA_HOME"></parameter>
+		        </action>
+			</then>
+		</if>
+
+		<!--注册服务-->
+		<echo message="register server" />
+		<action name="register server" classname="com.bosssoft.platform.installer.wizard.action.RegisterServer">
+		</action>
+		<!--&lt;!&ndash;配置属性文件&ndash;&gt;-->
+		<!--<echo message="config properties" />-->
+		<!--<action name="config properties" classname="com.bosssoft.install.nontax.windows.action.ConfigProperties">-->
+			<!--<parameter name="initParams" value="DB_URL,DB_USERNAME,DB_PASSWORD,DB_DRIVER" />-->
+		<!--</action>-->
+
+
+		<!--创建运行的可执行脚本-->
+	  <echo message="create startFile...."/>
+		<action name="create startFile" classname="com.bosssoft.install.nontax.windows.action.CreateStartFile"
+				desc="create startFile" scale="10">
+			<parameter name="targetDir" value="${INSTALL_DIR}" />
+			<parameter name="environments" value="JAVA_HOME,classpath,path" />
+		</action>
+		<setvalue key="runFile" value="${INSTALL_DIR}/start.bat" />
+
+		 <!--创建停止的可执行脚本-->
+		 <echo message="create stopFile...."/>
+	     <action name="create stopFile" classname="com.bosssoft.install.nontax.windows.action.CreateStopFile"
+			desc="create startFile" scale="10">
+			<parameter name="targetDir" value="${INSTALL_DIR}"/>
+		 </action>
+		 <setvalue key="stopFile" value="${INSTALL_DIR}/stop.bat" />
+
+		<!--创建卸载运行脚本-->
+		<echo message="create uninstall file..."/>
+		<action name="uninstall" classname="com.bosssoft.install.nontax.windows.action.CreateUninstallFile"
+			desc="uninstall" scale="10">
+			<parameter name="targetDir" value="${INSTALL_DIR}" />
+			<parameter name="sourceFILE" value="${INSTALL_ROOT}/installer/del.txt" />
+			<!--<parameter name="delpath" value="${INSTALL_DIR}/java_1.8,${INSTALL_DIR}/redis" />-->
+			<parameter name="delpath" value="${INSTALL_DIR}" />
+		</action>
+		<setvalue key="uninstallFile" value="${INSTALL_DIR}/uninstall.bat" />
+
+<!--		&lt;!&ndash;记录产品的版本信息&ndash;&gt;
+		<echo message="record product version..."/>
+		<action name="record product version" classname="com.bosssoft.platform.installer.wizard.action.SetVersion"
+			desc="uninstall" scale="10">
+			<parameter name="versionFile" value="${INSTALL_ROOT}/option_comps/version.xml" />
+		</action>-->
+
+		<!--license 文件拷贝到bosshome目录下-->
+		<!--<copyfile src="${INSTALL_ROOT}/installer/bosssoft-license.xml" dest="${BOSSSOFT_HOME}/license/bosssoft-license.xml" /> -->
+
+	   <!--设置浏览器访问地址-->
+	 <!--  <setvalue key="URL" value="http://${IP}:${APP_SERVER_PORT}/agency-web" />-->
+		
+		<echo message="install finished"/>
+		
+		
+		</actions>
+</project>
