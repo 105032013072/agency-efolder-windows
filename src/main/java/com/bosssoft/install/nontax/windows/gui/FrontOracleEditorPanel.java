@@ -1,14 +1,20 @@
 package com.bosssoft.install.nontax.windows.gui;
 
 import java.awt.BorderLayout;
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.Properties;
 
 import javax.swing.JFrame;
 
+import org.apache.log4j.Logger;
+
+import com.bosssoft.platform.installer.core.util.InstallerFileManager;
 import com.bosssoft.platform.installer.wizard.gui.AbstractDBEditorPanel;
 import com.bosssoft.platform.installer.wizard.gui.db.OracleEditorPanel;
 
 public class FrontOracleEditorPanel extends AbstractDBEditorPanel {
+	Logger logger = Logger.getLogger(getClass());
 	public FrontOracleEditorPanel() {
 		initUI();
 	}
@@ -22,7 +28,17 @@ public class FrontOracleEditorPanel extends AbstractDBEditorPanel {
 	public void initUI() {
 		this.lblSID.setText("SID:");
 		this.tfdPort.setText("1521");
-		this.tfdSID.setText("agencydb");
+		Properties propers=new Properties();
+		String dafaultConfig= InstallerFileManager.getConfigDir()+ File.separator+"default_install.properties";
+		FileInputStream inStream= null;
+		try{
+			inStream=new FileInputStream(dafaultConfig);
+			propers.load(inStream);
+			this.tfdSID.setText(propers.getProperty("DB_NAME"));//数据库名
+		}catch(Exception e){
+			logger.error(e);
+		}
+
 		
 	}
 

@@ -9,7 +9,7 @@ import com.bosssoft.platform.installer.core.InstallException;
 import com.bosssoft.platform.installer.core.action.IAction;
 import com.bosssoft.platform.installer.core.util.ExpressionParser;
 /**
- *设置应用服务器的启动路径
+ *设置应用服务器的相关路径
  * @author Windows
  *
  */
@@ -23,13 +23,17 @@ public class SetAppsvrPath implements IAction{
 			String serverdir=ExpressionParser.parseString("${AS_TOMCAT_HOME}/bin/");
 			context.setValue("appSvr_path", serverdir+"startup.bat");
 			logger.info(context.getValue("appSvr_path"));
+			
+			context.setValue("appSvr_deploy_path", ExpressionParser.parseString("${AS_TOMCAT_HOME}/webapps"));
 
 		}else if(appsvrType.toLowerCase().indexOf("jboss")!=-1){
 			
 		}else if(appsvrType.toLowerCase().indexOf("weblogic")!=-1){
 			String serverdir=ExpressionParser.parseString("${AS_WL_DOMAIN_HOME}/");
 			context.setValue("appSvr_path", serverdir+"startWebLogic.cmd");
-		}
+			
+			context.setValue("appSvr_deploy_path", ExpressionParser.parseString("${AS_WL_DOMAIN_HOME}/autodeploy"));
+		} 
 		
 	}
 

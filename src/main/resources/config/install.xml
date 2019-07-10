@@ -291,6 +291,12 @@
 			<!--<parameter name="initParams" value="DB_URL,DB_USERNAME,DB_PASSWORD,DB_DRIVER" />-->
 		<!--</action>-->
 
+       <!--修改应用中的配置信息-->
+       <action name="SetApplicationConfig" classname="com.bosssoft.install.nontax.windows.action.SetApplicationConfig"
+			desc="init DataSource" scale="10">
+			<parameter name="initParams" value="DB_URL,DB_USERNAME,DB_PASSWORD,DB_DRIVER" />
+	  </action>
+
 
 		<!--创建运行的可执行脚本-->
 	  <echo message="create startFile...."/>
@@ -331,7 +337,7 @@
 		<!--<copyfile src="${INSTALL_ROOT}/installer/bosssoft-license.xml" dest="${BOSSSOFT_HOME}/license/bosssoft-license.xml" /> -->
 
 	   <!--设置浏览器访问地址-->
-	 <!--  <setvalue key="URL" value="http://${IP}:${APP_SERVER_PORT}/agency-web" />-->
+	  <setvalue key="URL" value="http://${IP}:${APP_SERVER_PORT}/efolder-web/index/login.do" />
 		
 		<echo message="install finished"/>
 		

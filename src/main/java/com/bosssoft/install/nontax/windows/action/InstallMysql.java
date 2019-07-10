@@ -51,6 +51,7 @@ public class InstallMysql implements IAction{
 	private void runbat(String batFile,String... argStrings) throws Exception {
 
 		String cmd = "cmd.exe /c start  /b  " + batFile + " ";
+		//String cmd = "cmd.exe /c   " + batFile + " ";
 	    if (argStrings != null && argStrings.length > 0) {
 	        for (String string : argStrings) {
 	            cmd += string + " ";

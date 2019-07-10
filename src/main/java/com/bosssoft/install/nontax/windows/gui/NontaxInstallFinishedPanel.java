@@ -121,7 +121,11 @@ public class NontaxInstallFinishedPanel extends AbstractSetupPanel{
 	}
 	
 	public void afterActions(){
-		
+		//桌面快捷键
+	    String icoDir=ExpressionParser.parseString("${INSTALL_DIR}")+File.separator+"image";
+		String desktop=FileSystemView.getFileSystemView().getHomeDirectory().getAbsolutePath();
+		String ico=ico=icoDir+File.separator+"efolder.ico";
+		ShortCutUtil.createUrlShortcut(I18nUtil.getString("SHORTCUT.DIR"),ExpressionParser.parseString(getContext().getStringValue("URL")) , ico, desktop);
 	}
 
 	@Override

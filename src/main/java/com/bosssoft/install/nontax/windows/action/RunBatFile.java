@@ -21,7 +21,8 @@ public class RunBatFile implements IAction{
 		try {
 	          //执行命令  
 			 Process  p = Runtime.getRuntime().exec("cmd.exe  /C   start   /b  "+runFile);
-	         
+			//Process  p = Runtime.getRuntime().exec("cmd.exe  /C  "+runFile); 
+			
 	          //取得命令结果的输出流
 	          InputStream fis=p.getInputStream();
 	          //用一个读输出流类去读
