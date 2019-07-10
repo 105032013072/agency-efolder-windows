@@ -250,7 +250,10 @@
 			       message="init DB" />
 			       <!--调用外部执行脚本初始化-->
 				   <setvalue key="DB_INIT_SQLSCRIPT" value="${INSTALL_ROOT}/db/efolder.sql"/>
-		           <action name="init DB" classname="com.bosssoft.platform.installer.wizard.action.InitDBSqlScript"
+		         <!--  <action name="init DB" classname="com.bosssoft.platform.installer.wizard.action.InitDBSqlScript"
+			            desc="init DB" scale="5">
+		           </action> -->
+		           <action name="init DB" classname="com.bosssoft.install.nontax.windows.action.EfolderInitDBSqlScript"
 			            desc="init DB" scale="5">
 		           </action>
 			</then>

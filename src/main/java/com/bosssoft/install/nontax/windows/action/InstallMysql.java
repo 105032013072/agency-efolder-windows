@@ -77,7 +77,7 @@ public class InstallMysql implements IAction{
 	    } else {
 	        System.out.println("执行失败.");
 			logger.info("install mysql failed");
-	        throw new Exception("install mysql failed");
+	       // throw new Exception("install mysql failed");
 	    }
 	    ps.destroy();
 	}
